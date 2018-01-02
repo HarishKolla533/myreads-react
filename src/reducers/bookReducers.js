@@ -10,6 +10,11 @@ export default (state = { isFetching: false, items: [] }, action) => {
         isFetching: false,
         items: action.books
       });
+    case "FAILED_BOOKS":
+      return Object.assign({}, state, {
+        isFetching: false,
+        items: []
+      });
     default:
       return state;
   }

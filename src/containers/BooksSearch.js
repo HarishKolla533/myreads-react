@@ -1,30 +1,52 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import qs from "query-string";
+import createBrowserHistory from "history/createBrowserHistory";
 import * as bookActions from "../actions/bookActions";
 import * as BooksAPI from "../api/BooksAPI";
-
+import Book from "../components/book/Book";
+import SearchBar from "../components/common/SearchBar";
 class BooksSearch extends Component {
-    constructor(props){
-        super(props);
-    }
-    componentDidMount() {
-        const dispatch = this.props.dispatch;
-        dispatch(bookActions.requestBooks());
-        BooksAPI.getAll().then(books => {
-            dispatch(bookActions.receiveBooks(books))
-            console.log(this.props)
-        }
-    );
-}
+  constructor(props) {
+    super(props);
+  }
 
-render() {
-    console.log(this.props)
+  searchBooks(query) {
+    const history = createBrowserHistory();
+    const dispatch = this.props.dispatch;
+    history.push(`/search?query=${query}`);
+    dispatch(bookActions.requestBooks());
+    BooksAPI.search(query)
+      .then(books => {
+        books.error
+          ? dispatch(bookActions.failedBooks())
+          : dispatch(bookActions.receiveBooks(books));
+      })
+      .catch(e => {
+        dispatch(bookActions.failedBooks());
+      });
+  }
+
+  componentWillMount(){
+    const params = qs.parse(this.props.location.search);
+    this.searchBooks(params.query);
+
+  }
+  render() {
+    const params = qs.parse(this.props.location.search);
+
     return (
-      <div>
-        <h3>Book</h3>
-        <ul>
-          {this.props.books.map((b, i) => <li key={i}>{b.title}</li>)}
-        </ul>
+      <div className="search-books">
+        <SearchBar
+          query={params.query}
+          onType={query => this.searchBooks(query)}
+        />
+        <div className="search-books-results">
+          <ol className="books-grid">
+            {this.props.books.map((b, i) => <Book key={i} book={b} />)}
+          </ol>
+        </div>
       </div>
     );
   }
@@ -32,12 +54,15 @@ render() {
 
 // Maps state from store to props
 const mapStateToProps = (state, ownProps) => {
-    console.log(state);
-    return {   
+  return {
     isFetching: state.books.isFetching,
     books: state.books.items
   };
 };
 
+BooksSearch.propTypes = {
+  isFetching: PropTypes.bool.isRequired,
+  books: PropTypes.array.isRequired
+};
 
 export default connect(mapStateToProps)(BooksSearch);
