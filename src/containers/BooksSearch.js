@@ -30,7 +30,9 @@ class BooksSearch extends Component {
 
   componentWillMount(){
     const params = qs.parse(this.props.location.search);
-    this.searchBooks(params.query);
+    if (params.query){
+      this.searchBooks(params.query);
+    } 
 
   }
   render() {
