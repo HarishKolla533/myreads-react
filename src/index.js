@@ -9,14 +9,14 @@ import BooksSearch from "./containers/BooksSearch";
 import App from "./components/App";
 import "./index.css";
 
-let store = createStore(rootReducer);
+export const store = createStore(rootReducer);
 
 ReactDOM.render(
   <Provider store={store}>
     <Router>
       <App>
         <Route exact path="/" component={Home} />
-        <Route path="/search" component={BooksSearch} />
+        <Route path="/search" component={BooksSearch} store={store}/>
       </App>
     </Router>
   </Provider>,

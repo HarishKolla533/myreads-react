@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import Bookshelf from "../components/book/BookShelf";
 import * as BooksAPI from "../api/BooksAPI";
 import * as bookShelfActions from "../actions/bookShelfActions";
+import { Link } from "react-router-dom";
 
 class Home extends Component {
   constructor(props) {
@@ -13,6 +14,7 @@ class Home extends Component {
   componentWillMount() {
     this.getBookShelf();
   }
+
   getBookShelf() {
     // const history = createBrowserHistory();
     const dispatch = this.props.dispatch;
@@ -29,17 +31,29 @@ class Home extends Component {
       });
   }
   render() {
-
+    console.log(this.props);
     return <div>
         <div className="list-books">
           <div className="list-books-title">
             <h1>MyReads</h1>
           </div>
           <div className="list-books-content">
-            {this.props.shelfs.currentlyReading && <Bookshelf shelfTitle="Currently Reading" books={this.props.shelfs.currentlyReading} />}
+            {this.props.shelfs.map(shelf => (
+              <Bookshelf
+                key={shelf.name}
+                shelfTitle={shelf.title}
+                books={shelf.books}
+              />
+            ))}
+            {/* {this.props.shelfs.currentlyReading && <Bookshelf shelfTitle="Currently Reading" books={this.props.shelfs.currentlyReading} />}
             {this.props.shelfs.read && <Bookshelf shelfTitle="Readed" books={this.props.shelfs.read} />}
-            {this.props.shelfs.wantToRead && <Bookshelf shelfTitle="What to Read" books={this.props.shelfs.wantToRead} />}
+            {this.props.shelfs.wantToRead && <Bookshelf shelfTitle="What to Read" books={this.props.shelfs.wantToRead} />} */}
           </div>
+        </div>
+        <div className="open-search">
+          <Link to="/search">
+            Add a book
+          </Link>
         </div>
       </div>;
   }
@@ -54,7 +68,7 @@ const mapStateToProps = state => {
 
 Home.propTypes = {
   isFetching: PropTypes.bool.isRequired,
-  shelfs: PropTypes.object.isRequired
+  shelfs: PropTypes.array.isRequired
 };
 
 export default connect(mapStateToProps)(Home);

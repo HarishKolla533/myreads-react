@@ -5,7 +5,7 @@ export const requestBooks = () => {
   // Return action
   return {
     type: REQUEST_BOOKS
-  }; 
+  };
 };
 
 export const receiveBooks = books => {
@@ -15,5 +15,6 @@ export const receiveBooks = books => {
   };
 };
 export const failedBooks = () => {
-  return { type: FAILED_BOOKS};
+  return { type: FAILED_BOOKS };
 };
+
