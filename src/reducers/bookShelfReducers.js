@@ -1,3 +1,45 @@
+/**
+ * Return a title for it shelf option
+ * @param {string} name
+ */
+const getShelfTitle = name => {
+  switch (name) {
+    case "currentlyReading":
+      return "Currently Reading";
+    case "wantToRead":
+      return "Want to Read";
+    case "read":
+      return "Read";
+    default:
+      return "";
+  }
+};
+/**
+ * Add a book to a bookshelf
+ * @param {string} shelfName - Shelf to add the book
+ * @param {object} book - book to be added
+ * @param {array} shelfs - array of existing shelfs
+ */
+const addBookToShelf = (shelfName, book, shelfs) => {
+  // alter the sehfl propertie on the book
+  book.shelf = shelfName;
+  // find the shelf where to put the book
+  let shelfObj = shelfs.find(shelf => shelf.name === shelfName);
+  // create a shelf if it does not exist
+  if (!shelfObj) {
+    var title = getShelfTitle(shelfName);
+    shelfs.push({
+      name: shelfName,
+      title: title,
+      books: [book]
+    });
+  }
+  // if shelf exist add the book
+  if (shelfObj) {
+    shelfObj.books.push(book);
+  }
+};
+
 export default (state = { isFetching: false, shelfs: [] }, action) => {
   switch (action.type) {
     /** Set fetching to true */
@@ -10,9 +52,7 @@ export default (state = { isFetching: false, shelfs: [] }, action) => {
      */
     case "RECEIVE_BOOKSHELF":
       let bookShelfs = [];
-      action.bookShelf.map(book => {
-        addBookToShelf(book.shelf, book, bookShelfs);
-      });
+      action.bookShelf.map(book => addBookToShelf(book.shelf, book, bookShelfs));
       return Object.assign({}, state, {
         isFetching: false,
         shelfs: bookShelfs
@@ -40,46 +80,4 @@ export default (state = { isFetching: false, shelfs: [] }, action) => {
     default:
       return state;
   }
-
 };
-/**
- * Return a title for it shelf option
- * @param {string} name 
- */
-    const getShelfTitle = name => {
-      switch (name) {
-        case "currentlyReading":
-          return "Currently Reading";
-        case "wantToRead":
-          return "Want to Read";
-        case "read":
-          return "Read";
-        default:
-          return "";
-      }
-    };
-    /**
-     * Add a book to a bookshelf
-     * @param {string} shelfName - Shelf to add the book
-     * @param {object} book - book to be added
-     * @param {array} shelfs - array of existing shelfs
-     */
-    const addBookToShelf = (shelfName, book ,shelfs) => {
-        // alter the sehfl propertie on the book
-        book.shelf = shelfName;
-        // find the shelf where to put the book
-        let shelfObj = shelfs.find(shelf => shelf.name === shelfName);
-        // create a shelf if it does not exist
-        if (!shelfObj) {
-          var title = getShelfTitle(shelfName);
-          shelfs.push({
-            name: shelfName,
-            title: title,
-            books: [book]
-          });
-        }
-        // if shelf exist add the book
-        if (shelfObj) {
-          shelfObj.books.push(book);
-        }
-    };

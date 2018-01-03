@@ -11,9 +11,7 @@ import { Link } from "react-router-dom";
  * @class
  */
 class Home extends Component {
-  constructor(props) {
-    super(props);
-  }
+
   static propTypes = {
     /** True when the api is fetching for shelfs */
     isFetching: PropTypes.bool.isRequired,

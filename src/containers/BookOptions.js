@@ -9,9 +9,6 @@ import * as BooksAPI from "../api/BooksAPI";
  * @class
  */
 class BooksOptions extends Component {
-  constructor(props) {
-    super(props);
-  }
 
   static propTypes = {
     /** Book object too show the options */

@@ -1,4 +1,3 @@
-import { REQUEST_BOOKS, RECEIVE_BOOKS } from "../actions/bookActions";
 export default (state = { isFetching: false, items: [] }, action) => {
   switch (action.type) {
     /**

@@ -13,9 +13,6 @@ import SearchBar from "../components/common/SearchBar";
  * @class
  */
 class BooksSearch extends Component {
-  constructor(props) {
-    super(props);
-  }
 
   static propTypes = {
   /** if the state is fetching */
