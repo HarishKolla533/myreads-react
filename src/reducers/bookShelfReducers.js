@@ -53,6 +53,7 @@ export default (state = { isFetching: false, shelfs: [] }, action) => {
     case "RECEIVE_BOOKSHELF":
       let bookShelfs = [];
       action.bookShelf.map(book => addBookToShelf(book.shelf, book, bookShelfs));
+      console.dir(bookShelfs);
       return Object.assign({}, state, {
         isFetching: false,
         shelfs: bookShelfs

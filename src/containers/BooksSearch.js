@@ -12,8 +12,11 @@ import SearchBar from "../components/common/SearchBar";
  * Container for the search books route
  * @class
  */
-class BooksSearch extends Component {
-
+export class BooksSearch extends Component {
+  constructor(props) {
+    super(props);
+    this.query;
+  }
   static propTypes = {
   /** if the state is fetching */
   isFetching: PropTypes.bool.isRequired,
@@ -46,20 +49,20 @@ class BooksSearch extends Component {
       });
   }
 
-  componentWillMount() {
+  componentDidMount() {
     /** Check if the route jas a query, and make a search with it */
     const params = qs.parse(this.props.location.search);
+    
     if (params.query) {
+      this.query = params.query;
       this.searchBooks(params.query);
     }
   }
   render() {
-    const params = qs.parse(this.props.location.search);
-
     return (
       <div className="search-books">
         <SearchBar
-          query={params.query}
+          query={this.query}
           onType={query => this.searchBooks(query)}
         />
         <div className="search-books-results">

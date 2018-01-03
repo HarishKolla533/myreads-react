@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
  * Container for the homepage where de bookshelf will be showed
  * @class
  */
-class Home extends Component {
+export class Home extends Component {
 
   static propTypes = {
     /** True when the api is fetching for shelfs */
@@ -18,7 +18,7 @@ class Home extends Component {
     /** Array of shelfs to be showed*/
     shelfs: PropTypes.array.isRequired
   };
-  componentWillMount() {
+  componentDidMount() {
     /** get our bookshelf info */
     this.getBookShelf();
   }

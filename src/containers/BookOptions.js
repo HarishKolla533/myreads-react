@@ -8,7 +8,7 @@ import * as BooksAPI from "../api/BooksAPI";
  * Component with the possible actions options for a book
  * @class
  */
-class BooksOptions extends Component {
+export class BookOptions extends Component {
 
   static propTypes = {
     /** Book object too show the options */
@@ -34,7 +34,6 @@ class BooksOptions extends Component {
         <select
           value={this.props.book.shelf ? this.props.book.shelf : "none"}
           onChange={event => {
-            console.log(event);
             event.target.value && this.setBookShelf(event.target.value);
           }}
         >
@@ -51,4 +50,4 @@ class BooksOptions extends Component {
   }
 }
 
-export default connect()(BooksOptions);
+export default connect()(BookOptions);
