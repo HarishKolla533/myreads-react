@@ -1,15 +1,22 @@
 import { REQUEST_BOOKS, RECEIVE_BOOKS } from "../actions/bookActions";
 export default (state = { isFetching: false, items: [] }, action) => {
   switch (action.type) {
-    // Check if action dispatched is
-    // CREATE_BOOK and act on that
+    /**
+     * Set the fetching to true
+     */
     case "REQUEST_BOOKS":
       return Object.assign({}, state, { isFetching: true });
+    /**
+     * Add received books to the state
+     */
     case "RECEIVE_BOOKS":
       return Object.assign({}, state, {
         isFetching: false,
         items: action.books
       });
+    /**
+     * Set fetchinf to false e clean books results
+     */
     case "FAILED_BOOKS":
       return Object.assign({}, state, { isFetching: false, items: [] });
     default:

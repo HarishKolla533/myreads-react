@@ -7,33 +7,54 @@ import * as bookActions from "../actions/bookActions";
 import * as BooksAPI from "../api/BooksAPI";
 import Book from "../components/book/Book";
 import SearchBar from "../components/common/SearchBar";
+
+/**
+ * Container for the search books route
+ * @class
+ */
 class BooksSearch extends Component {
   constructor(props) {
     super(props);
   }
 
+  static propTypes = {
+  /** if the state is fetching */
+  isFetching: PropTypes.bool.isRequired,
+  /** array of books found on search */
+  books: PropTypes.array.isRequired
+};
+  /**
+   * Find books in the api
+   * @param {string} query
+   */
   searchBooks(query) {
     const history = createBrowserHistory();
     const dispatch = this.props.dispatch;
+    // Add query to the route
     history.push(`/search?query=${query}`);
+    // Dispatch action before request
     dispatch(bookActions.requestBooks());
+    // Api call for the books
     BooksAPI.search(query)
       .then(books => {
+        // check if the api returned a error property. It will happen when no book is found
         books.error
-          ? dispatch(bookActions.failedBooks())
-          : dispatch(bookActions.receiveBooks(books));
+          ? // error action
+            dispatch(bookActions.failedBooks())
+          : // books received action
+            dispatch(bookActions.receiveBooks(books));
       })
       .catch(e => {
         dispatch(bookActions.failedBooks());
       });
   }
 
-  componentWillMount(){
+  componentWillMount() {
+    /** Check if the route jas a query, and make a search with it */
     const params = qs.parse(this.props.location.search);
-    if (params.query){
+    if (params.query) {
       this.searchBooks(params.query);
-    } 
-
+    }
   }
   render() {
     const params = qs.parse(this.props.location.search);
@@ -62,9 +83,6 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-BooksSearch.propTypes = {
-  isFetching: PropTypes.bool.isRequired,
-  books: PropTypes.array.isRequired
-};
+
 
 export default connect(mapStateToProps)(BooksSearch);

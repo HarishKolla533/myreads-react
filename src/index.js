@@ -9,8 +9,10 @@ import BooksSearch from "./containers/BooksSearch";
 import App from "./components/App";
 import "./index.css";
 
+/** Creating store */
 export const store = createStore(rootReducer);
 
+/** adding rendering using react-router */
 ReactDOM.render(
   <Provider store={store}>
     <Router>

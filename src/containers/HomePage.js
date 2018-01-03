@@ -6,56 +6,66 @@ import * as BooksAPI from "../api/BooksAPI";
 import * as bookShelfActions from "../actions/bookShelfActions";
 import { Link } from "react-router-dom";
 
+/**
+ * Container for the homepage where de bookshelf will be showed
+ * @class
+ */
 class Home extends Component {
   constructor(props) {
     super(props);
   }
-
+  static propTypes = {
+    /** True when the api is fetching for shelfs */
+    isFetching: PropTypes.bool.isRequired,
+    /** Array of shelfs to be showed*/
+    shelfs: PropTypes.array.isRequired
+  };
   componentWillMount() {
+    /** get our bookshelf info */
     this.getBookShelf();
   }
 
   getBookShelf() {
-    // const history = createBrowserHistory();
     const dispatch = this.props.dispatch;
-    // history.push(`/search?query=${query}`);
+    // Action before request
     dispatch(bookShelfActions.requestBookshelf());
+    // API call
     BooksAPI.getAll()
       .then(bookShelf => {
+        // Check if a error is return, happens when no book is found
         bookShelf.error
-          ? dispatch(bookShelfActions.failedBookshelf())
-          : dispatch(bookShelfActions.receiveBookshelf(bookShelf));
+          ? // error action
+            dispatch(bookShelfActions.failedBookshelf())
+          : //receive action passing result
+            dispatch(bookShelfActions.receiveBookshelf(bookShelf));
       })
       .catch(e => {
         dispatch(bookShelfActions.failedBookshelf());
       });
   }
   render() {
-    console.log(this.props);
-    return <div>
+    return (
+      <div>
         <div className="list-books">
           <div className="list-books-title">
             <h1>MyReads</h1>
           </div>
           <div className="list-books-content">
-            {this.props.shelfs.map(shelf => (
+            {/** Add a bookshelf component for it shelf */
+            this.props.shelfs.map(shelf => (
               <Bookshelf
                 key={shelf.name}
                 shelfTitle={shelf.title}
                 books={shelf.books}
               />
             ))}
-            {/* {this.props.shelfs.currentlyReading && <Bookshelf shelfTitle="Currently Reading" books={this.props.shelfs.currentlyReading} />}
-            {this.props.shelfs.read && <Bookshelf shelfTitle="Readed" books={this.props.shelfs.read} />}
-            {this.props.shelfs.wantToRead && <Bookshelf shelfTitle="What to Read" books={this.props.shelfs.wantToRead} />} */}
           </div>
         </div>
         <div className="open-search">
-          <Link to="/search">
-            Add a book
-          </Link>
+          <Link to="/search">Add a book</Link>
         </div>
-      </div>;
+      </div>
+    );
   }
 }
 
@@ -64,11 +74,6 @@ const mapStateToProps = state => {
     isFetching: state.bookShelf.isFetching,
     shelfs: state.bookShelf.shelfs
   };
-};
-
-Home.propTypes = {
-  isFetching: PropTypes.bool.isRequired,
-  shelfs: PropTypes.array.isRequired
 };
 
 export default connect(mapStateToProps)(Home);
