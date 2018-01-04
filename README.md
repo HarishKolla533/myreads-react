@@ -4,8 +4,9 @@ This project is a example React/Redux App for add books on categorized shelfs.
 
 ## Technical Features:
 * Redux architecture
-* LocalStorage usage to save Redux State
 * Testing with Jest and Enzyma (for components)
+* LocalStorage usage to sync Redux State
+* Validation with prop-types
 
 ## Get Started
 
@@ -33,18 +34,23 @@ npm test or ... ok you got it already
 │   └── index.html # DO NOT MODIFY
 └── src
     ├── App.css # Styles for your app. Feel free to customize this as you desire.
-    ├── actions # 
+    ├── actions # All the redux actions
     ├── api # 
     │    ├── BooksAPI.js # A JavaScript API for the provided Udacity backend. 
-    ├── components # 
-    ├── containers # 
+    ├── components # simple stateless components
+    ├── containers # more complex containers
+    ├── constants # more complex containers
+    │    ├── Actions.js # All the existing actions type constants. 
     ├── icons # Helpful images for your app. Use at your discretion.
-    ├── reducers # 
-    ├── utils # 
+    ├── reducers # Redux reducers
+    ├── utils # Utils files
+    │    ├── testMocks.js # Js object to use on tests
     ├── index.css # Global styles. 
     └── index.js #
 ```
-
+## Next Steps
+* Add immutableJs
+* Add new features
 
 ## Backend Server
 
