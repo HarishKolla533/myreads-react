@@ -15,7 +15,7 @@ import SearchBar from "../components/common/SearchBar";
 export class BooksSearch extends Component {
   constructor(props) {
     super(props);
-    this.query;
+    this.query = '';
   }
   static propTypes = {
   /** if the state is fetching */

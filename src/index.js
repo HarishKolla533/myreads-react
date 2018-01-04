@@ -9,7 +9,6 @@ import BooksSearch from "./containers/BooksSearch";
 import App from "./components/App";
 import "./index.css";
 
-
 /** Creating store */
 export const store = createStore(rootReducer);
 
@@ -18,8 +17,12 @@ ReactDOM.render(
   <Provider store={store}>
     <Router>
       <App>
-        <Route exact path="/" component={Home} />
-        <Route path="/search" component={BooksSearch} store={store}/>
+        <Route exact path={process.env.PUBLIC_URL + "/"} component={Home} />
+        <Route
+          path={process.env.PUBLIC_URL + "/search"}
+          component={BooksSearch}
+          store={store}
+        />
       </App>
     </Router>
   </Provider>,
