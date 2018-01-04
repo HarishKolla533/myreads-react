@@ -1,16 +1,20 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { createStore } from "redux";
+import { createStore, compose } from "redux";
 import { Provider } from "react-redux";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import rootReducer from "./reducers";
 import Home from "./containers/HomePage";
 import BooksSearch from "./containers/BooksSearch";
+import persistState from 'redux-localstorage'
 import App from "./components/App";
 import "./index.css";
 
+const enhancer = compose(
+  persistState()
+)
 /** Creating store */
-export const store = createStore(rootReducer);
+export const store = createStore(rootReducer, enhancer);
 
 /** adding rendering using react-router */
 ReactDOM.render(
