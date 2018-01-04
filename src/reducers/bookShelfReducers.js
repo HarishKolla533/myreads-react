@@ -40,33 +40,40 @@ const addBookToShelf = (shelfName, book, shelfs) => {
   }
 };
 
+import {
+  REQUEST_BOOKSHELF,
+  RECEIVE_BOOKSHELF,
+  FAILED_BOOKSHELF,
+  CHANGE_BOOKSHELF
+} from "../constants/ActionTypes";
+
+
 export default (state = { isFetching: false, shelfs: [] }, action) => {
   switch (action.type) {
     /** Set fetching to true */
-    case "REQUEST_BOOKSHELF":
+    case REQUEST_BOOKSHELF:
       return Object.assign({}, state, { isFetching: true });
     /**
      * Receive ao the book on shelfs and covert it on a array of
      * shelfs with books in
      * @param {array} action.bookShelf - Array of book in the user bookshelf
      */
-    case "RECEIVE_BOOKSHELF":
+    case RECEIVE_BOOKSHELF:
       let bookShelfs = [];
       action.bookShelf.map(book => addBookToShelf(book.shelf, book, bookShelfs));
-      console.dir(bookShelfs);
       return Object.assign({}, state, {
         isFetching: false,
         shelfs: bookShelfs
       });
     /** Failed request for bookshelf */
-    case "FAILED_BOOKSHELF":
+    case FAILED_BOOKSHELF:
       return Object.assign({}, state, { isFetching: false, items: [] });
     /**
      * Put a book on a shelf
      * @param {string} action.shelf - Shelf where to put the book
      * @param {object} action.book - book to update the shelf
      */
-    case "CHANGE_BOOKSHELF":
+    case CHANGE_BOOKSHELF:
       /**  remove book from the previous shelf if any */
       let newShelfs = state.shelfs.map(shelf => {
         shelf.books = shelf.books.filter(book => book.id !== action.book.id);

@@ -104,7 +104,8 @@ const testMocks = {
         "http://books.google.com/books?id=IEk2m00o9_IC&dq=android&hl=&source=gbs_api",
       canonicalVolumeLink:
         "https://books.google.com/books/about/Android_Apps_Security.html?hl=&id=IEk2m00o9_IC",
-      id: "IEk2m00o9_IC"
+      id: "IEk2m00o9_IC",
+      shelf:"read"
     }
   ],
   shelfs: [

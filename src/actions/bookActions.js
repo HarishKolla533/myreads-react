@@ -1,6 +1,8 @@
-const REQUEST_BOOKS = "REQUEST_BOOKS";
-const RECEIVE_BOOKS = "RECEIVE_BOOKS";
-const FAILED_BOOKS = "FAILED_BOOKS";
+import {
+  REQUEST_BOOKS,
+  RECEIVE_BOOKS,
+  FAILED_BOOKS
+} from "../constants/ActionTypes";
 
 /** Called before a request for books is done */
 export const requestBooks = () => {

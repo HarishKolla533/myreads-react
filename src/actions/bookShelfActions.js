@@ -1,7 +1,9 @@
-const REQUEST_BOOKSHELF = "REQUEST_BOOKSHELF";
-const RECEIVE_BOOKSHELF = "RECEIVE_BOOKSHELF";
-const FAILED_BOOKSHELF = "FAILED_BOOKSHELF";
-const CHANGE_BOOKSHELF = "CHANGE_BOOKSHELF";
+import {
+  REQUEST_BOOKSHELF,
+  RECEIVE_BOOKSHELF,
+  FAILED_BOOKSHELF,
+  CHANGE_BOOKSHELF
+} from "../constants/ActionTypes";
 
 /** Called before a request for booksshlf is done */
 export const requestBookshelf = () => {
