@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import BookShelf from "../components/book/BookShelf";
-import * as BooksAPI from "../api/BooksAPI";
 import * as bookShelfActions from "../actions/bookShelfActions";
 import { Link } from "react-router-dom";
 
@@ -25,21 +24,7 @@ export class Home extends Component {
 
   getBookShelf() {
     const dispatch = this.props.dispatch;
-    // Action before request
-    dispatch(bookShelfActions.requestBookshelf());
-    // API call
-    BooksAPI.getAll()
-      .then(bookShelf => {
-        // Check if a error is return, happens when no book is found
-        bookShelf.error
-          ? // error action
-            dispatch(bookShelfActions.failedBookshelf())
-          : //receive action passing result
-            dispatch(bookShelfActions.receiveBookshelf(bookShelf));
-      })
-      .catch(e => {
-        dispatch(bookShelfActions.failedBookshelf());
-      });
+    dispatch(bookShelfActions.getBookShelf());
   }
   render() {
     return <div>
