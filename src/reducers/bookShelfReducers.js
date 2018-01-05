@@ -48,7 +48,7 @@ import {
 } from "../constants/ActionTypes";
 
 
-export default (state = { isFetching: false, shelfs: [] }, action) => {
+export default (state = { isFetching: false, shelfs: [], items: [] }, action) => {
   switch (action.type) {
     /** Set fetching to true */
     case REQUEST_BOOKSHELF:
@@ -63,11 +63,12 @@ export default (state = { isFetching: false, shelfs: [] }, action) => {
       action.bookShelf.map(book => addBookToShelf(book.shelf, book, bookShelfs));
       return Object.assign({}, state, {
         isFetching: false,
-        shelfs: bookShelfs
+        shelfs: bookShelfs,
+        items: action.bookShelf
       });
     /** Failed request for bookshelf */
     case FAILED_BOOKSHELF:
-      return Object.assign({}, state, { isFetching: false, items: [] });
+      return Object.assign({}, state, { isFetching: false, shelfs:[],items: [] });
     /**
      * Put a book on a shelf
      * @param {string} action.shelf - Shelf where to put the book
