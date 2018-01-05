@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import Bookshelf from "../components/book/Bookshelf";
+import BookShelf from "../components/book/BookShelf";
 import * as BooksAPI from "../api/BooksAPI";
 import * as bookShelfActions from "../actions/bookShelfActions";
 import { Link } from "react-router-dom";
@@ -42,8 +42,7 @@ export class Home extends Component {
       });
   }
   render() {
-    return (
-      <div>
+    return <div>
         <div className="list-books">
           <div className="list-books-title">
             <h1>MyReads</h1>
@@ -51,7 +50,7 @@ export class Home extends Component {
           <div className="list-books-content">
             {/** Add a bookshelf component for it shelf */
             this.props.shelfs.map(shelf => (
-              <Bookshelf
+              <BookShelf
                 key={shelf.name}
                 shelfTitle={shelf.title}
                 books={shelf.books}
@@ -62,8 +61,7 @@ export class Home extends Component {
         <div className="open-search">
           <Link to="/search">Add a book</Link>
         </div>
-      </div>
-    );
+      </div>;
   }
 }
 
