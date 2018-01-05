@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import qs from "query-string";
 import createBrowserHistory from "history/createBrowserHistory";
 import * as bookActions from "../actions/bookActions";
-import * as BooksAPI from "../api/BooksAPI";
 import Book from "../components/book/Book";
 import SearchBar from "../components/common/SearchBar";
 
@@ -13,42 +12,18 @@ import SearchBar from "../components/common/SearchBar";
  * @class
  */
 export class BooksSearch extends Component {
-  constructor(props) {
-    super(props);
-    this.query = '';
-  }
+
   static propTypes = {
   /** if the state is fetching */
   isFetching: PropTypes.bool.isRequired,
   /** array of books found on search */
   books: PropTypes.array.isRequired
 };
-  /**
-   * Find books in the api
-   * @param {string} query
-   */
-  searchBooks(query) {
-    const history = createBrowserHistory();
+  searchBooks(query){  
     const dispatch = this.props.dispatch;
-    // Add query to the route
-    history.push(`/search?query=${query}`);
-    // Dispatch action before request
-    dispatch(bookActions.requestBooks());
-    // Api call for the books
-    BooksAPI.search(query)
-      .then(books => {
-        // check if the api returned a error property. It will happen when no book is found
-        books.error
-          ? // error action
-            dispatch(bookActions.failedBooks())
-          : // books received action
-            dispatch(bookActions.receiveBooks(books));
-      })
-      .catch(e => {
-        dispatch(bookActions.failedBooks());
-      });
-  }
-
+    dispatch(bookActions.searchBooks(query))
+    }
+    
   componentDidMount() {
     /** Check if the route jas a query, and make a search with it */
     const params = qs.parse(this.props.location.search);
@@ -59,10 +34,12 @@ export class BooksSearch extends Component {
     }
   }
   render() {
+          const history = createBrowserHistory();
+          history.push(`/search?query=${this.props.query}`);
     return (
       <div className="search-books">
         <SearchBar
-          query={this.query}
+          query={this.props.query}
           onType={query => this.searchBooks(query)}
         />
         <div className="search-books-results">
@@ -77,10 +54,7 @@ export class BooksSearch extends Component {
 
 // Maps state from store to props
 const mapStateToProps = (state, ownProps) => {
-  return {
-    isFetching: state.books.isFetching,
-    books: state.books.items
-  };
+  return { isFetching: state.books.isFetching, books: state.books.items, query: state.books.query };
 };
 
 
