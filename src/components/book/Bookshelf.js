@@ -20,6 +20,7 @@ const BookShelf = props => (
 
 
 BookShelf.propTypes = {
+  
   //** A array of books to add to the shelf */
   books: PropTypes.array.isRequired
 };
