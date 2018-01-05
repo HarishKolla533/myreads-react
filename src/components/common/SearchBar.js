@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
+
 /**
  * Basic searchbar stateless component
  * @constructor
@@ -21,7 +22,7 @@ const SearchBar = props => (
         type="text"
         placeholder="Search by title or author"
         onChange={event => props.onType(event.target.value)}
-        value={props.query}
+        defaultValue={props.query}
       />
     </div>
   </div>

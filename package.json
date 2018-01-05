@@ -3,6 +3,7 @@
   "dependencies": {
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-15": "^1.0.5",
+    "lodash": "^4.17.4",
     "prop-types": "^15.6.0",
     "query-string": "^5.0.1",
     "react": "^15.5.4",
