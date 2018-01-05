@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import Bookshelf from "../components/book/BookShelf";
+import Bookshelf from "../components/book/Bookshelf";
 import * as BooksAPI from "../api/BooksAPI";
 import * as bookShelfActions from "../actions/bookShelfActions";
 import { Link } from "react-router-dom";
