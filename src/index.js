@@ -6,15 +6,19 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import rootReducer from "./reducers";
 import Home from "./containers/HomePage";
 import BooksSearch from "./containers/BooksSearch";
-import persistState from 'redux-localstorage'
-import thunk from "redux-thunk";
+import persistState from "redux-localstorage";
+import createSagaMiddleware from "redux-saga";
 import App from "./components/App";
+import rootSaga from "./sagas";
 import "./index.css";
 
+const sagaMiddleware = createSagaMiddleware();
 
-const enhancer = compose(persistState(), applyMiddleware(thunk));
+const enhancer = compose(persistState(), applyMiddleware(sagaMiddleware));
 /** Creating store */
 export const store = createStore(rootReducer, enhancer);
+
+sagaMiddleware.run(rootSaga);
 
 /** adding rendering using react-router */
 ReactDOM.render(

@@ -4,7 +4,6 @@ import {
   FAILED_BOOKSHELF,
   CHANGE_BOOKSHELF
 } from "../constants/ActionTypes";
-import * as BooksAPI from "../api/BooksAPI";
 
 
 /** Called before a request for booksshlf is done */
@@ -32,18 +31,3 @@ export const changeBookShelf = (book, shelf) => {
 };
 
 
-export const getBookShelf = () => (dispatch, getState) => {
-         // Action before request
-         dispatch(requestBookshelf());
-         // API call
-        return BooksAPI.getAll()
-           .then(bookShelf => {
-             // Check if a error is return, happens when no book is found
-             bookShelf.error ? // error action
-                 dispatch(failedBookshelf()) : //receive action passing result
-                 dispatch(receiveBookshelf(bookShelf));
-           })
-           .catch(e => {
-             dispatch(failedBookshelf());
-           });
-       };

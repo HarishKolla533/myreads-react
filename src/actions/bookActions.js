@@ -4,13 +4,13 @@ import {
   FAILED_BOOKS,
   SET_BOOK_QUERY
 } from "../constants/ActionTypes";
-import * as BooksAPI from "../api/BooksAPI";
 
 /** Called before a request for books is done */
-export const requestBooks = () => {
+export const requestBooks = query => {
   // Return action
   return {
-    type: REQUEST_BOOKS
+    type: REQUEST_BOOKS,
+    query: query
   };
 };
 
@@ -33,36 +33,4 @@ export const setBookQuery = query => {
   return { type: SET_BOOK_QUERY, query: query };
 };
 
-/**
- * Find books in the api
- * @param {string} query
- */
-export const searchBooks = query => (dispatch, getState) => {
-  dispatch(setBookQuery(query));
-  // Dispatch action before request
-  dispatch(requestBooks());
-  // Api call for the books
-  return BooksAPI.search(query)
-    .then(books => {
-      // check if the api returned a error property. It will happen when no book is found
-      if (books.error) {
-        // error action
-        dispatch(failedBooks());
-      }
-      //  Merge with books on bookshelf
-      const bookShelf = getState().bookShelf;
-      const mergedBooks = books.map(book => {
-        let foundBook = bookShelf.items.find(
-          bookOnShelf => bookOnShelf.id === book.id
-        );
-        return foundBook ? foundBook : book;
-      });
 
-      // books received action
-
-      dispatch(receiveBooks(mergedBooks));
-    })
-    .catch(e => {
-      dispatch(failedBooks());
-    });
-};

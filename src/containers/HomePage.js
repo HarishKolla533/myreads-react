@@ -24,7 +24,7 @@ export class Home extends Component {
 
   getBookShelf() {
     const dispatch = this.props.dispatch;
-    dispatch(bookShelfActions.getBookShelf());
+    dispatch(bookShelfActions.requestBookshelf());
   }
   render() {
     return <div>

@@ -2,14 +2,12 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import * as bookShelfActions from "../actions/bookShelfActions";
-import * as BooksAPI from "../api/BooksAPI";
 
 /**
  * Component with the possible actions options for a book
  * @class
  */
 export class BookOptions extends Component {
-
   static propTypes = {
     /** Book object too show the options */
     book: PropTypes.object.isRequired
@@ -20,13 +18,7 @@ export class BookOptions extends Component {
    */
   setBookShelf(shelf) {
     const dispatch = this.props.dispatch;
-    // Update shelf on the api
-    BooksAPI.update(this.props.book, shelf)
-      .then(response => {
-        //dispatch redux action
-        dispatch(bookShelfActions.changeBookShelf(this.props.book, shelf));
-      })
-      .catch(e => {});
+    dispatch(bookShelfActions.changeBookShelf(this.props.book, shelf));
   }
   render() {
     return (

@@ -27,18 +27,17 @@ export class BooksSearch extends Component {
   searchBooks(query) {
     if (query) {
       const dispatch = this.props.dispatch;
-      dispatch(bookActions.searchBooks(query)).then(() => {
-        // Add query to the route
-        const history = createBrowserHistory();
-        history.push(`/search?query=${this.props.query}`);
-      });
+      dispatch(bookActions.requestBooks(query));
+      // Add query to the route
+      const history = createBrowserHistory();
+      history.push(`/search?query=${query}`);
     }
   }
-  
+
   componentDidMount() {
     /** Check if the route jas a query, and make a search with it */
     const params = qs.parse(this.props.location.search);
-    
+
     // If a new query is not informed in the route, load the one in the state
     if (this.props.query && !params.query) {
       const history = createBrowserHistory();
